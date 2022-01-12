@@ -1,0 +1,21 @@
+name: Run Azure Login with OIDC
+on: [push]
+
+permissions:
+      id-token: write
+      contents: read
+jobs: 
+  test-tokens-exchange-azure:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 'Az CLI login'
+        uses: azure/login@v1
+        with:
+          client-id: ${{ secrets.CLIENT_ID }}
+          tenant-id: ${{ secrets.TENANT_ID }}
+          subscription-id: ${{ secrets.SUB_ID }}
+  
+      - name: 'Run az commands'
+        run: |
+          az account show
+          az group list
